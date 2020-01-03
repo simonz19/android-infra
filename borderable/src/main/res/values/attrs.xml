@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BorderableViews">
+        <attr name="borders">
+            <flag name="left" value="0x01" />
+            <flag name="right" value="0x02" />
+            <flag name="top" value="0x04" />
+            <flag name="bottom" value="0x08" />
+        </attr>
+        <attr name="borderInsidePadding" format="boolean" />
+        <attr name="borderWidth_" format="dimension" />
+        <attr name="borderColor" format="color" />
+        <attr name="borderRight" format="reference" />
+        <attr name="borderRightColor" format="color" />
+        <attr name="borderRightSize" format="dimension" />
+        <attr name="borderBottom" format="reference" />
+        <attr name="borderBottomColor" format="color" />
+        <attr name="borderBottomSize" format="dimension" />
+        <attr name="borderTopPaddingLeft" format="dimension" />
+        <attr name="borderTopPaddingRight" format="dimension" />
+        <attr name="borderBottomPaddingLeft" format="dimension" />
+        <attr name="borderBottomPaddingRight" format="dimension" />
+        <attr name="borderRightPaddingTop" format="dimension" />
+        <attr name="borderRightPaddingBottom" format="dimension" />
+        <attr name="borderLeftPaddingTop" format="dimension" />
+        <attr name="borderLeftPaddingBottom" format="dimension" />
+        <attr name="borderLeft" format="reference" />
+        <attr name="borderLeftColor" format="color" />
+        <attr name="borderLeftSize" format="dimension" />
+        <attr name="borderTop" format="reference" />
+        <attr name="borderTopColor" format="color" />
+        <attr name="borderTopSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="Badge">
+        <attr name="badgePosition">
+            <flag name="topleft" value="0x01" />
+            <flag name="topright" value="0x02" />
+            <flag name="bottomleft" value="0x04" />
+            <flag name="bottomright" value="0x08" />
+        </attr>
+        <attr name="badgeResource" format="reference" />
+        <attr name="badgeMargin" format="dimension" />
+        <attr name="badgePadding" format="dimension" />
+        <attr name="badgeRadius" format="dimension" />
+        <attr name="badgeColor" format="color" />
+        <attr name="badgePaddingTopAdd" format="dimension" />
+        <attr name="badgePaddingTopSub" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="Hint">
+        <attr name="hintPosition">
+            <flag name="topleft" value="0x01" />
+            <flag name="topright" value="0x02" />
+            <flag name="bottomleft" value="0x04" />
+            <flag name="bottomright" value="0x08" />
+            <flag name="center" value="0x16" />
+        </attr>
+        <attr name="hintResource" format="reference" />
+        <attr name="hintMargin" format="dimension" />
+        <attr name="hintPadding" format="dimension" />
+        <attr name="hintMargin2" format="dimension" />
+        <attr name="hintPadding2" format="dimension" />
+        <attr name="hintRadius" format="dimension" />
+        <attr name="hintColor" format="color" />
+        <attr name="hintText" format="string" />
+        <attr name="hintText2" format="string" />
+        <attr name="hintTextSize" format="dimension" />
+        <attr name="hintWidth" format="dimension" />
+    </declare-styleable>
+
+</resources>

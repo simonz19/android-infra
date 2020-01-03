@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="recyclerRefresh">
+        <attr name="recyclerRefreshMode" format="enum">
+            <enum name="GridLayoutManager" value="0" />
+            <enum name="LinearLayoutManager" value="1" />
+            <enum name="StaggeredGridLayoutManager" value="2" />
+        </attr>
+        <attr name="recyclerRefreshOrientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="recyclerRefreshcolunms" format="integer" />
+    </declare-styleable>
+
+</resources>

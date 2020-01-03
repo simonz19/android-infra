@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="submit_press">请稍候，正在提交...</string>
+    <string name="loading_press">正在拼命加载...</string>
+    <string name="list_footer_loading">正在加载中…</string>
+    <string name="list_footer_network_error">点击重新加载</string>
+    <string name="list_footer_end">已经到底了</string>
+    <string name="pullToRefresh">下拉刷新%s...</string>
+    <string name="releaseToRefresh">松手刷新%s...</string>
+    <string name="Refreshing">正在刷新%s...</string>
+    <string name="dialog_btn_confim">确认</string>
+    <string name="dialog_btn_cancel">取消</string>
+    <string name="dialog_title_alert">提示</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dialog_round_radius">4.0dip</dimen>
+    <dimen name="MinDialogWidth">320.0dip</dimen>
+    <dimen name="dialog_padding">15.0dip</dimen>
+</resources>
