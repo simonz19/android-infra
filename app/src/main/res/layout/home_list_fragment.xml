@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,5 +9,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.common.refresh.refreshrecyclerview.SwipRefreshCommonRecyclerView
+            android:id="@+id/home_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            auto:layout_constraintBottom_toBottomOf="parent"
+            auto:layout_constraintLeft_toLeftOf="parent"
+            auto:layout_constraintRight_toRightOf="parent"
+            auto:layout_constraintTop_toTopOf="parent"
+            auto:recyclerRefreshMode="LinearLayoutManager" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

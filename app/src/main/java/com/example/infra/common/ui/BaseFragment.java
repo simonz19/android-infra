@@ -16,6 +16,12 @@ import androidx.lifecycle.ViewModelProviders;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+/**
+ * extend lifeCycle as: onCreateView ( => onGetResourceId => onViewBound?) => onActivityCreated
+ *
+ * @param <T>
+ * @param <W>
+ */
 public abstract class BaseFragment<T extends ViewDataBinding, W extends ViewModel> extends Fragment {
 
     protected T mBind;

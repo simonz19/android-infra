@@ -1,14 +1,23 @@
 package com.example.infra.ui.homelist;
 
 import android.os.Bundle;
-import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.infra.R;
-import com.example.infra.common.ui.BaseFragment;
-import com.example.infra.common.ui.lazyload.LazyLoadFragment;
+import com.example.infra.common.adapter.SimpleBaseBindingAdapter;
+import com.example.infra.common.http.ObserverImpl;
+import com.example.infra.common.ui.lazyloadservice.LazyLoadServiceFragment;
 import com.example.infra.databinding.HomeListFragmentBinding;
+import com.example.infra.databinding.HomeListItemBinding;
+import com.example.infra.ui.homelist.entity.HomeFeed;
+import com.example.infra.ui.homelist.entity.HomeFeedDetail;
 
-public class HomeListFragment extends LazyLoadFragment<HomeListFragmentBinding, HomeListViewModel> {
+public class HomeListFragment extends LazyLoadServiceFragment<HomeListFragmentBinding, HomeListViewModel, HomeListService> {
+
+    SimpleBaseBindingAdapter<HomeFeedDetail, HomeListItemBinding> adapter;
 
     public static HomeListFragment newInstance(int index) {
 
@@ -20,33 +29,16 @@ public class HomeListFragment extends LazyLoadFragment<HomeListFragmentBinding, 
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Log.d("lifecycle", "onStart==> " + getArguments().getInt("index"));
-    }
+    protected void onViewBound() {
+        adapter = new SimpleBaseBindingAdapter<HomeFeedDetail, HomeListItemBinding>(getContext(), R.layout.home_list_item) {
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("lifecycle","onResume==> " + getArguments().getInt("index"));
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("lifecycle", "onPause==>" + getArguments().getInt("index"));
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d("lifecycle", "onStop==> " + getArguments().getInt("index"));
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("lifecycle", "onDestroy==> " + getArguments().getInt("index"));
+            @Override
+            protected void onSimpleBindItem(HomeListItemBinding binding, HomeFeedDetail item, RecyclerView.ViewHolder holder) {
+                String url = item.getImg1() == null ? item.getPic1Url() : item.getImg1();
+                Glide.with(getContext()).load(url).into(binding.imageItem);
+            }
+        };
+        mBind.homeRecycleView.setAdapter(adapter);
     }
 
     @Override
@@ -54,10 +46,22 @@ public class HomeListFragment extends LazyLoadFragment<HomeListFragmentBinding, 
         return R.layout.home_list_fragment;
     }
 
+    @NonNull
+    @Override
+    protected HomeListService onCreateService() {
+        return new HomeListService();
+    }
 
     @Override
     protected boolean onLazyLoad() {
-        showContent();
+        mService.loadHomeFeed(new ObserverImpl<HomeFeed>() {
+            @Override
+            protected void onSuccess(HomeFeed homeFeed) {
+                adapter.setList(homeFeed.getData());
+                adapter.notifyDataSetChanged();
+                showContent();
+            }
+        });
         return super.onLazyLoad();
     }
 }

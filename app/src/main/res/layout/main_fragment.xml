@@ -34,26 +34,12 @@
             android:background="#ccc"
             app:layout_constraintBottom_toTopOf="@+id/main_tab_layout" />
 
-        <com.google.android.material.tabs.TabLayout
+        <com.example.infra.widgets.TabLayout
             android:id="@+id/main_tab_layout"
             currentTabIndex="@{mainVM.tabIndex}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:tabIndicatorHeight="0dp">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:icon="@color/colorAccent"
-                android:text="首页" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:icon="@color/colorAccent"
-                android:text="我的" />
-        </com.google.android.material.tabs.TabLayout>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
