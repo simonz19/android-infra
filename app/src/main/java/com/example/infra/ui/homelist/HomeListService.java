@@ -1,22 +1,19 @@
 package com.example.infra.ui.homelist;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-
-import com.example.infra.common.http.ObserverImpl;
+import com.example.infra.common.http.DisposableConsumerObserver;
 import com.example.infra.common.http.RetrofitExcutor;
 import com.example.infra.common.http.Retrofitter;
 import com.example.infra.common.ui.lazyloadservice.LazyLoadService;
 import com.example.infra.ui.homelist.entity.HomeFeed;
 
+import io.reactivex.functions.Consumer;
+
 public class HomeListService extends LazyLoadService {
 
-    public void loadHomeFeed(ObserverImpl<HomeFeed> observer) {
-        RetrofitExcutor.get().excute(Retrofitter.getIns().get().GetHomeFeed(1), observer);
-    }
+    DisposableConsumerObserver<HomeFeed> homeFeedObserver;
 
-    @Override
-    public void onDestroy(@NonNull LifecycleOwner owner) {
-        // todo destroy requests
+    public void loadHomeFeed(Consumer<HomeFeed> successConsumer) {
+        homeFeedObserver = setObserverConsumer(homeFeedObserver, () -> new DisposableConsumerObserver<HomeFeed>(successConsumer));
+        RetrofitExcutor.get().excute(Retrofitter.getIns().get().GetHomeFeed(1), homeFeedObserver);
     }
 }

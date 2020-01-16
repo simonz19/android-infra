@@ -10,6 +10,9 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import com.example.infra.common.ui.lazyload.LazyLoadFragment;
 import com.example.infra.common.ui.lazyload.LazyLoadViewModel;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 /**
  * extend lifeCycle as: onCreateView ( => onGetResourceId => onViewBound?) => onActivityCreated ( => onCreateService)
  *
@@ -17,7 +20,7 @@ import com.example.infra.common.ui.lazyload.LazyLoadViewModel;
  * @param <W>
  * @param <Y>
  */
-public abstract class LazyLoadServiceFragment<T extends ViewDataBinding, W extends LazyLoadViewModel, Y extends DefaultLifecycleObserver>
+public abstract class LazyLoadServiceFragment<T extends ViewDataBinding, W extends LazyLoadViewModel, Y extends LazyLoadService>
         extends LazyLoadFragment<T, W> {
 
     protected Y mService;
@@ -26,6 +29,21 @@ public abstract class LazyLoadServiceFragment<T extends ViewDataBinding, W exten
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mService = onCreateService();
+        if (mService == null) {
+            try {
+                Type type = getClass().getGenericSuperclass();
+                ParameterizedType parameterizedType = (ParameterizedType) type;
+                Class<Y> serviceClass = (Class<Y>) parameterizedType.getActualTypeArguments()[2];
+                mService = serviceClass.newInstance();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (mService == null) throw new NullPointerException("failed to create LazyLoadService, " +
+                "pls at least provide a non parameter constructor or implement onCreateService function in fragment");
         getLifecycle().addObserver(mService);
     }
 
@@ -40,6 +58,8 @@ public abstract class LazyLoadServiceFragment<T extends ViewDataBinding, W exten
      *
      * @return LifeCycleObserver
      */
-    protected abstract @NonNull
-    Y onCreateService();
+    protected Y onCreateService() {
+        return null;
+    }
+
 }

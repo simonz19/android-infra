@@ -11,16 +11,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 import retrofit2.HttpException;
 
-public abstract class ObserverImpl<T> implements Observer<T> {
-
-    @Override
-    public void onSubscribe(Disposable d) {
-
-    }
+public abstract class DefaultDisposableObserver<T> extends DisposableObserver<T> {
 
     @Override
     public final void onNext(T t) {

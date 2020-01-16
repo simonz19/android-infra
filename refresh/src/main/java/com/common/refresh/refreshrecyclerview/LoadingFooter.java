@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.common.refresh.R;
 
-
 /**
  * ListView/GridView/RecyclerView 分页加载时使用到的FooterView
  */

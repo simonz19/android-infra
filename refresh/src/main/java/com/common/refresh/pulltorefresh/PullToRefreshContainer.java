@@ -168,7 +168,7 @@ public class PullToRefreshContainer extends ViewGroup {
                 if (-getScrollY() >= headerView.getHeight()) {
                     headerView.onRefreshing();
                     scroller.startScroll(0, getScrollY(), 0, -getScrollY() - headerView.getHeight(), 500);
-                    if (iRefreshing != null&&!isRefreshing){
+                    if (iRefreshing != null && !isRefreshing) {
                         iRefreshing.onRefresh();
                         isRefreshing = true;
                     }
@@ -279,6 +279,15 @@ public class PullToRefreshContainer extends ViewGroup {
      */
     public void setIRefreshing(IRefreshing iRefreshing) {
         this.iRefreshing = iRefreshing;
+    }
+
+    /**
+     * 是否在刷新
+     *
+     * @return
+     */
+    public boolean isRefreshing() {
+        return isRefreshing;
     }
 
     /**

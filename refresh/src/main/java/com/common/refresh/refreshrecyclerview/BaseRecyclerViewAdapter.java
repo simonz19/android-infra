@@ -5,31 +5,43 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
+public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected Context context;
     protected List<T> datas;
     private int lastAnimatedPosition = -1;
     private int ANIMATED_ITEMS_COUNT;
-    private onItemClickLitener<T> onItemClickLitener;
+    private OnItemClickLitener<T> onItemClickLitener;
+
+    protected BaseRecyclerViewAdapter() {
+        datas = new ArrayList<T>();
+    }
+
+    protected BaseRecyclerViewAdapter(Context ctx) {
+        this();
+        this.context = ctx;
+    }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onItemClickLitener!=null){
-                    onItemClickLitener.onItemCLick(position,holder.itemView,datas.get(position));
+                if (position < getHeaderCount() || position >= getHeaderCount() + ANIMATED_ITEMS_COUNT) {
+                    return;
+                } //除去头部和脚步视图的点击事件,单独设置
+                if (onItemClickLitener != null) {
+                    onItemClickLitener.onItemCLick(position-getHeaderCount(), holder.itemView, datas.get(position-getHeaderCount()));
                 }
             }
         });
+        runEnterAnimation(holder.itemView, position);
     }
 
-    public void setOnItemClickLitener(BaseRecyclerViewAdapter.onItemClickLitener<T> onItemClickLitener) {
+    public void setOnItemClickLitener(OnItemClickLitener<T> onItemClickLitener) {
         this.onItemClickLitener = onItemClickLitener;
     }
 
@@ -50,15 +62,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Vi
 
     protected boolean animate() {
         return false;
-    }
-
-    protected BaseRecyclerViewAdapter() {
-        datas = new ArrayList<T>();
-    }
-
-    protected BaseRecyclerViewAdapter(Context ctx) {
-        this();
-        this.context = ctx;
     }
 
     public List<T> getDatas() {
@@ -94,7 +97,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Vi
         lastAnimatedPosition = -1;
     }
 
-    public interface onItemClickLitener<T>{
+    public interface OnItemClickLitener<T> {
         void onItemCLick(int position, View view, T t);
     }
 }

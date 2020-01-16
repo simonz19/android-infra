@@ -10,4 +10,7 @@
     <string name="dialog_btn_confim">确认</string>
     <string name="dialog_btn_cancel">取消</string>
     <string name="dialog_title_alert">提示</string>
+    <string name="data_null">暂无更多数据</string>
+    <string name="load_retry">点击图标重试</string>
+    <string name="error_happened">出错啦!</string>
 </resources>

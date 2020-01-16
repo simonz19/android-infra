@@ -15,13 +15,13 @@ public class RetrofitExcutor {
         return retrofitExcutor;
     }
 
-    public <T> void excute(Observable<T> observable, ObserverImpl<T> observerImpl) {
+    public <T> void excute(Observable<T> observable, DefaultDisposableObserver<T> observer) {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observerImpl);
+                .subscribe(observer);
     }
 
-    public <T> void excuteSync(Observable<T> observable, ObserverImpl<T> observerImpl) {
-        observable.subscribe(observerImpl);
+    public <T> void excuteSync(Observable<T> observable, DefaultDisposableObserver<T> observer) {
+        observable.subscribe(observer);
     }
 }

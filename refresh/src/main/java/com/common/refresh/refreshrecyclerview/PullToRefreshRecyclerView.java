@@ -18,9 +18,11 @@ public abstract class PullToRefreshRecyclerView extends RefreshRecyclerView {
     private PullToRefreshContainer.IRefreshing irefreshing = new PullToRefreshContainer.IRefreshing() {
         @Override
         public void onRefresh() {
-            if (onRecyclerRefreshListener != null) {
+            if (onRecyclerRefreshListener != null && onRecyclerRefreshListener.size() > 0) {
                 RecyclerViewStateUtils.setFooterViewState(getContext(), recyclerView, LoadingFooter.State.Normal, null);
-                onRecyclerRefreshListener.onRefresh();
+                for (int i = 0; i < onRecyclerRefreshListener.size(); i++) {
+                    onRecyclerRefreshListener.get(i).onRefresh();
+                }
             }
         }
     };
@@ -60,8 +62,13 @@ public abstract class PullToRefreshRecyclerView extends RefreshRecyclerView {
     }
 
     @Override
-    public void setRefreshMode(boolean supportRefresh) {
-        if (!supportRefresh)
+    public void setMode(Mode mode) {
+        if (mode == Mode.DISABLE || mode == Mode.LOAD_MORE)
             container.setRefreshMode(PullToRefreshContainer.DONOTREFRESH);
+    }
+
+    @Override
+    public boolean isRefreshing() {
+        return container.isRefreshing();
     }
 }

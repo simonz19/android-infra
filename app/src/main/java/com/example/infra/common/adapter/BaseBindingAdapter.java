@@ -17,6 +17,7 @@
 package com.example.infra.common.adapter;
 
 import android.content.Context;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,45 +27,27 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.common.refresh.refreshrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author KunMinX
- * Create at 2018/6/30
- */
-public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends RecyclerView.Adapter {
-
-    protected Context mContext;
-    protected List<M> mList = new ArrayList<>();
-
-    public List<M> getList() {
-        return mList;
-    }
+public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends HeaderAndFooterRecyclerViewAdapter<M> {
 
     public BaseBindingAdapter(Context context) {
-        this.mContext = context;
-    }
-
-    public void setList(List<M> list) {
-        this.mList = list;
+        super(context);
     }
 
     @Override
-    public int getItemCount() {
-        return null == this.mList ? 0 : this.mList.size();
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        B binding = DataBindingUtil.inflate(LayoutInflater.from(this.mContext), this.getLayoutResId(viewType), parent, false);
+    public RecyclerView.ViewHolder onCreateMyViewHolder(ViewGroup parent, int viewType) {
+        B binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), this.getLayoutResId(viewType), parent, false);
         return new BaseBindingViewHolder(binding.getRoot());
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindMyViewHolder(RecyclerView.ViewHolder holder, final int position) {
         B binding = DataBindingUtil.getBinding(holder.itemView);
-        this.onBindItem(binding, this.mList.get(position), holder);
+        this.onBindItem(binding, this.datas.get(position), holder);
     }
 
     protected abstract @LayoutRes

@@ -1,6 +1,5 @@
 package com.example.infra.common.ui.lazyload;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,7 @@ import com.common.progress.ProgressView;
 import com.example.infra.R;
 import com.example.infra.common.ui.BaseFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 /**
  * extends lifecycle with {@link LazyLoadFragment#onLazyLoad()} and integrate with
@@ -29,7 +27,7 @@ import java.util.List;
  * @param <W>
  */
 public abstract class LazyLoadFragment<T extends ViewDataBinding, W extends LazyLoadViewModel>
-        extends BaseFragment<T, W> implements ILazyLoad {
+        extends BaseFragment<T, W> implements IProgressListener {
 
     private boolean isLoaded;
     private ProgressView progressView;
@@ -42,7 +40,7 @@ public abstract class LazyLoadFragment<T extends ViewDataBinding, W extends Lazy
         if (view != null) {
             progressView.addView(view, 0, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
-        progressView.showLoading("");
+        showLoading();
         return progressView;
     }
 
@@ -55,15 +53,21 @@ public abstract class LazyLoadFragment<T extends ViewDataBinding, W extends Lazy
     }
 
     @Override
-    public void showLoading(String loadingTitle) {
+    public void showLoading() {
         if (!progressView.isLoading())
-            progressView.showLoading(loadingTitle);
+            progressView.showLoading(getString(R.string.loading_press));
     }
 
     @Override
-    public void showSubmit(String loadingTitle) {
+    public void showLoading2() {
+        if (!progressView.isLoading2())
+            progressView.showLoading2(getString(R.string.loading_press));
+    }
+
+    @Override
+    public void showSubmit() {
         if (!progressView.isSubmit())
-            progressView.showSubmit(loadingTitle);
+            progressView.showSubmit(getString(R.string.submit_press));
     }
 
     @Override
@@ -73,16 +77,17 @@ public abstract class LazyLoadFragment<T extends ViewDataBinding, W extends Lazy
     }
 
     @Override
-    public void showEmpty(Drawable emptyImageDrawable, String emptyTextTitle, String emptyTextContent, List<Integer> skipIds) {
-        if (null == skipIds) skipIds = new ArrayList<>();
+    public void showEmpty(View.OnClickListener onClickListener) {
         if (!progressView.isEmpty())
-            progressView.showEmpty(emptyImageDrawable, emptyTextTitle, emptyTextContent, skipIds);
+            progressView.showEmpty(getResources().getDrawable(R.drawable.global_loading_null), getString(R.string.data_null),
+                    getString(R.string.load_retry), onClickListener, Collections.EMPTY_LIST);
     }
 
     @Override
-    public void showError(Drawable emptyImageDrawable, String emptyTextTitle, String emptyTextContent, String errorButtonText, View.OnClickListener onClickListener) {
+    public void showError(View.OnClickListener onClickListener) {
         if (!progressView.isError())
-            progressView.showError(emptyImageDrawable, emptyTextTitle, emptyTextContent, errorButtonText, onClickListener);
+            progressView.showError(getResources().getDrawable(R.drawable.global_loading_retry),
+                    getString(R.string.error_happened), getString(R.string.load_retry), onClickListener);
     }
 
     /**

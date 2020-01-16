@@ -65,20 +65,19 @@ public class PullToRefreshHeaderRotate extends PullToRefreshHeaderBase {
     public void initView(Context context){
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) pxTodp(context, 50f));
         setLayoutParams(params);
-        setBackgroundColor(0xFFf5f5f5);
         tv_header = new TextView(context);
-        RelativeLayout.LayoutParams paramsTv = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        LayoutParams paramsTv = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         paramsTv.addRule(RelativeLayout.CENTER_IN_PARENT);
         tv_header.setLayoutParams(paramsTv);
         tv_header.setTextSize(15);
         addView(tv_header);
 
         iv_header = new ImageView(getContext());
-        RelativeLayout.LayoutParams paramsIv = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        LayoutParams paramsIv = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         paramsIv.addRule(RelativeLayout.ALIGN_PARENT_LEFT | RelativeLayout.CENTER_VERTICAL);
         paramsIv.leftMargin = (int) pxTodp(getContext(),24);
         iv_header.setLayoutParams(paramsIv);
-        iv_header.setImageResource(R.drawable.default_ptr_rotate);
+        iv_header.setImageResource(R.drawable.sample_ptr_rotate);
         onLoadingDrawableSet(iv_header.getDrawable()) ;
         headerMaxtrix = new Matrix();
         iv_header.setScaleType(ImageView.ScaleType.MATRIX);

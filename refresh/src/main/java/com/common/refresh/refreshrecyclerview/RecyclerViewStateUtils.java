@@ -21,7 +21,8 @@ public class RecyclerViewStateUtils {
      * @param state         FooterView State
      * @param errorListener FooterView处于Error状态时的点击事件
      */
-    public static void setFooterViewState(Context context, RecyclerView recyclerView, LoadingFooter.State state, View.OnClickListener errorListener) {
+    @Deprecated
+    static void setFooterViewState(Context context, RecyclerView recyclerView, LoadingFooter.State state, View.OnClickListener errorListener) {
 
         RecyclerView.Adapter outerAdapter = recyclerView.getAdapter();
 
@@ -39,11 +40,11 @@ public class RecyclerViewStateUtils {
         } else {
             footerView = new LoadingFooter(context);
             headerAndFooterAdapter.addFooterView(footerView);
+            if (state != LoadingFooter.State.Normal) {
+                recyclerView.scrollToPosition(headerAndFooterAdapter.getItemCount() - 1);
+            }
         }
         footerView.setState(state);
-        if (state != LoadingFooter.State.Normal) {
-            recyclerView.scrollToPosition(headerAndFooterAdapter.getItemCount() - 1);
-        }
         if (state == LoadingFooter.State.NetWorkError) {
             footerView.setOnClickListener(errorListener);
         } else {
@@ -52,11 +53,22 @@ public class RecyclerViewStateUtils {
     }
 
     /**
+     * 设置headerAndFooterAdapter的FooterView State
+     *
+     * @param recyclerView  recyclerView
+     * @param state         FooterView State
+     * @param errorListener FooterView处于Error状态时的点击事件
+     */
+    static void setFooterViewState(RecyclerView recyclerView, LoadingFooter.State state, View.OnClickListener errorListener) {
+        setFooterViewState(recyclerView.getContext(), recyclerView, state, errorListener);
+    }
+
+    /**
      * 获取当前RecyclerView.FooterView的状态
      *
      * @param recyclerView
      */
-    public static LoadingFooter.State getFooterViewState(RecyclerView recyclerView) {
+    static LoadingFooter.State getFooterViewState(RecyclerView recyclerView) {
 
         RecyclerView.Adapter outerAdapter = recyclerView.getAdapter();
         if (outerAdapter != null && outerAdapter instanceof HeaderAndFooterRecyclerViewAdapter) {
@@ -67,6 +79,23 @@ public class RecyclerViewStateUtils {
         }
 
         return LoadingFooter.State.Normal;
+    }
+
+    /**
+     * 移除footerview
+     *
+     * @param recyclerView
+     */
+    static void removeFooterView(RecyclerView recyclerView) {
+
+        RecyclerView.Adapter outerAdapter = recyclerView.getAdapter();
+        if (outerAdapter == null || !(outerAdapter instanceof HeaderAndFooterRecyclerViewAdapter)) {
+            return;
+        }
+        HeaderAndFooterRecyclerViewAdapter headerAndFooterAdapter = (HeaderAndFooterRecyclerViewAdapter) outerAdapter;
+        if (headerAndFooterAdapter.getFooterCount() > 0) {
+            headerAndFooterAdapter.removeFooterView(headerAndFooterAdapter.getFooterView());
+        }
     }
 
 }

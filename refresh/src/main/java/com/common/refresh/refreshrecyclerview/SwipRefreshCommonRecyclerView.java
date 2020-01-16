@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 
 import com.common.refresh.R;
 
+
 /**
  * Created by zou on 2016/3/23.
  * 支持swip刷新的recyclerview组合控件
@@ -31,7 +32,7 @@ public class SwipRefreshCommonRecyclerView extends SwipRefreshRecyclerView {
 
     @Override
     protected int getResId() {
-        return  R.layout.recycler_swip_refresh_common_layout;
+        return R.layout.recycler_swip_refresh_common_layout;
     }
 
 }

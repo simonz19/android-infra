@@ -1,5 +1,6 @@
 package com.common.refresh.refreshrecyclerview;
 
+import android.util.Log;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,9 +10,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 /**
  * 继承自RecyclerView.OnScrollListener，可以监听到是否滑动到页面最低部
  */
-public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener implements OnListLoadNextPageListener {
+public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener implements OnScrollToEndListener {
 
-     /**
+    /**
      * 当前RecyclerView类型
      */
     protected LayoutManagerType layoutManagerType;
@@ -25,11 +26,6 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
      * 最后一个可见的item的位置
      */
     private int lastVisibleItemPosition;
-
-    /**
-     * 当前滑动的状态
-     */
-    private int currentScrollState = 0;
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -66,22 +62,25 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
                 lastVisibleItemPosition = findMax(lastPositions);
                 break;
         }
-        onScroll(recyclerView, dx, dy) ;
+        onScroll(recyclerView, dx, dy);
     }
 
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
-        currentScrollState = newState;
+        Log.d("scroll", "newState===" + newState);
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         int visibleItemCount = layoutManager.getChildCount();
         int totalItemCount = layoutManager.getItemCount();
-        if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItemPosition) >= totalItemCount - 1)) {
-            onLoadNextPage(recyclerView);
+        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+            if ((visibleItemCount > 0 && (lastVisibleItemPosition) >= totalItemCount - 1)) {
+                onScrollToEnd(recyclerView);
+            }
         }
     }
 
-    protected void onScroll(RecyclerView recyclerView, int dx, int dy){}
+    protected void onScroll(RecyclerView recyclerView, int dx, int dy) {
+    }
 
     /**
      * 取数组中最大值

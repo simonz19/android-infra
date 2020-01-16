@@ -20,7 +20,7 @@ public abstract class HeaderAndFooterRecyclerViewAdapter<T> extends BaseRecycler
     private ArrayList<View> mFooterViews = new ArrayList<>();
 
     public HeaderAndFooterRecyclerViewAdapter(Context context) {
-        super(context) ;
+        super(context);
     }
 
     public void addHeaderView(View header) {
@@ -44,12 +44,12 @@ public abstract class HeaderAndFooterRecyclerViewAdapter<T> extends BaseRecycler
     }
 
     /**
-     * 返回第一个FoView
+     * 返回最后一个FopterView
      *
      * @return
      */
     public View getFooterView() {
-        return getFooterCount() > 0 ? mFooterViews.get(0) : null;
+        return getFooterCount() > 0 ? mFooterViews.get(mFooterViews.size() - 1) : null;
     }
 
     /**
@@ -95,9 +95,9 @@ public abstract class HeaderAndFooterRecyclerViewAdapter<T> extends BaseRecycler
 
     @Override
     public final RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType <0) {
+        if (viewType < 0) {
             return new ViewHolder(mHeaderViews.get(viewType - TYPE_HEADER_VIEW));
-        } else if (viewType > TYPE_FOOTER_VIEW/2) {
+        } else if (viewType > TYPE_FOOTER_VIEW / 2) {
             return new ViewHolder(mFooterViews.get(viewType - TYPE_FOOTER_VIEW));
         } else {
             return onCreateMyViewHolder(parent, viewType);
@@ -106,10 +106,9 @@ public abstract class HeaderAndFooterRecyclerViewAdapter<T> extends BaseRecycler
 
     @Override
     public final void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        super.onBindViewHolder(holder,position);
+        super.onBindViewHolder(holder, position);
         if (position >= getHeaderCount() && position < getHeaderCount() + getDataCount()) {
             onBindMyViewHolder(holder, position - getHeaderCount());
-            runEnterAnimation(holder.itemView,position) ;
         } else {
             ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
             if (layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
@@ -122,8 +121,8 @@ public abstract class HeaderAndFooterRecyclerViewAdapter<T> extends BaseRecycler
 
     protected abstract RecyclerView.ViewHolder onCreateMyViewHolder(ViewGroup parent, int viewType);
 
-    protected int getMyItemViewType(int position){
-        return 0 ;
+    protected int getMyItemViewType(int position) {
+        return 0;
     }
 
     @Override

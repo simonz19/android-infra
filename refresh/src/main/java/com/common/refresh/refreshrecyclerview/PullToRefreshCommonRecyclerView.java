@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 
 import com.common.refresh.R;
 
+
 /**
  * Created by zou on 2016/3/23.
  * 支持下拉刷新的recyclerview组合控件

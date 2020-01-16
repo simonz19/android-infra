@@ -3,6 +3,7 @@ package com.common.refresh.refreshrecyclerview;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -55,5 +56,13 @@ public class SwipRefreshPinnedRecyclerView extends SwipRefreshRecyclerView {
      */
     public void setPinnedHeaderView(int resId){
         ((PinnedHeaderRecyclerView)recyclerView).setPinnedHeaderView(LayoutInflater.from(getContext()).inflate(resId,recyclerView,false));
+    }
+
+    /**
+     *  设置置顶视图
+     * @param view
+     */
+    public void setPinnedHeaderView(View view){
+        ((PinnedHeaderRecyclerView)recyclerView).setPinnedHeaderView(view);
     }
 }

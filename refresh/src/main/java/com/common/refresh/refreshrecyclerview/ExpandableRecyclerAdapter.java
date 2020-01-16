@@ -60,7 +60,7 @@ public abstract class ExpandableRecyclerAdapter<W extends ExpandableParentItem,T
         }
     };
 
-    private void insertChildData(List childDatas, int startPos) {
+    private void insertChildData(List childDatas,int startPos) {
         datas.addAll(startPos,childDatas) ;
         notifyItemRangeInserted(startPos,childDatas.size());
     }
