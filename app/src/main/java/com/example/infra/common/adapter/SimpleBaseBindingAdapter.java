@@ -40,8 +40,4 @@ public abstract class SimpleBaseBindingAdapter<M, B extends ViewDataBinding> ext
         return this.layout;
     }
 
-    @Override
-    protected boolean animate() {
-        return true;
-    }
 }

@@ -80,6 +80,7 @@ public class HomeListFragment extends LazyLoadServiceFragment<HomeListFragmentBi
                 .build();
 
         loadingHandler.loadData();
+        getLifecycle().addObserver(loadingHandler);
 
 //        mService.loadHomeFeed(homeFeed -> {
 //            adapter.setList(homeFeed.getData());
